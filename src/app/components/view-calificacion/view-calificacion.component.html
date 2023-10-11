@@ -1,0 +1,95 @@
+<hr class="mt-4">
+<div class="container mb-5 px-0">
+  <h3 class="py-1 pb-3">Comentarios</h3>
+
+  <!--Comentario del usuario-->
+  <div class="media shadow-lg p-3 mb-2 bg-white rounded" *ngIf="usuario">
+    <img src="https://yt3.ggpht.com/ytc/AAUvwngCuYNxD6MXs-ihv_N4uBBCEZLkMp5jIrYn5VzW=s900-c-k-c0x00ffffff-no-rj"
+      class="mr-3" alt="..." style="max-width: 50px; min-height: 50px;">
+    <div class="media-body">
+      <div class="row w-100">
+        <h5 class="col-12 col-md-8 col-lg-8 text-md-left mt-0 ">
+          {{usuario.userName | titlecase}} {{usuario.userSurname | titlecase}}
+        </h5>
+        <p class="col-12 col-md-4 col-lg-4 text-md-right text-sm-left mb-1">{{usuario.updatedAt | date:"long"}}</p>
+      </div>
+
+      <form [formGroup]="formCalificacion">
+        <!--Calificaciones-->
+        <p class="clasificacion mb-1"> Estrellas
+          <input (change)="changeStar($event.target)" id="radio1" type="radio" name="estrellas" value="1">
+          <label [ngStyle]="{'color':formCalificacion.controls.estrellas.value >= 1 ? 'orange' : 'gray' }"
+            for="radio1">★</label>
+          <input (change)="changeStar($event.target)" id="radio2" type="radio" name="estrellas" value="2">
+          <label [ngStyle]="{'color':formCalificacion.controls.estrellas.value >= 2 ? 'orange' : 'gray' }"
+            for="radio2">★</label>
+          <input (change)="changeStar($event.target)" id="radio3" type="radio" name="estrellas" value="3">
+          <label [ngStyle]="{'color':formCalificacion.controls.estrellas.value >= 3 ? 'orange' : 'gray' }"
+            for="radio3">★</label>
+          <input (change)="changeStar($event.target)" id="radio4" type="radio" name="estrellas" value="4">
+          <label [ngStyle]="{'color':formCalificacion.controls.estrellas.value >= 4 ? 'orange' : 'gray' }"
+            for="radio4">★</label>
+          <input (change)="changeStar($event.target)" id="radio5" type="radio" name="estrellas" value="5">
+          <label [ngStyle]="{'color':formCalificacion.controls.estrellas.value >= 5 ? 'orange' : 'gray' }"
+            for="radio5">★</label>
+          <span class="text-danger" *ngIf="formCalificacion.controls.estrellas.errors?.required">
+            Califica el hotel
+          </span>
+        </p>
+
+        <textarea type="text" class="w-100 input-group mb-2 btn-white" rows="3" formControlName="comentario">Will you do the same for me? It's time to face the music I'm no longer your muse.
+          Heard it's beautiful, be the judge and my girls gonna take a vote. I can feel a phoenix
+           inside of me. Heaven is jealous of our love, angels are crying from up above. Yeah,
+            you take me to utopia.
+          </textarea>
+        <span class="text-danger" *ngIf="formCalificacion.controls.comentario.errors?.required">
+          Añade un comentario
+        </span>
+
+        <div class="float-right">
+          <button class="btn btn-outline-info my-0 my-sm-0 py-0 px-1 mr-3" *ngIf="calificacion"
+            (click)="removeCalificacion(formCalificacion.controls.idcalificacion.value)">Borrar</button>
+          <a class="btn btn-outline-success my-0 my-sm-0 py-0 px-1"
+            (click)="createAndUpdate()">Calificar</a>
+        </div>
+      </form>
+
+    </div>
+  </div>
+
+  <!--Comentarios predeterminados-->
+  <div>
+    <div class=" shadow-lg p-3 mb-2 bg-white rounded" *ngFor="let cal of calificaciones; let i = index">
+      <div class="media mb-2">
+        <img src="https://yt3.ggpht.com/ytc/AAUvwngCuYNxD6MXs-ihv_N4uBBCEZLkMp5jIrYn5VzW=s900-c-k-c0x00ffffff-no-rj"
+          class="mr-3" alt="..." style="max-width: 50px; min-height: 50px;">
+        <div class="media-body">
+          <div class="row w-100">
+            <h5 class="col-12 col-md-8 col-lg-8 text-md-left mt-0 ">{{cal.Usuario.nombre | titlecase}}
+              {{cal.Usuario.apellido | titlecase}}</h5>
+            <p class="col-12 col-md-4 col-lg-4 text-md-right text-sm-left mb-1">{{cal.updatedAt | date:"long"}}</p>
+          </div>
+
+          <!--Calificaciones-->
+          <p class="card-text py-0 mb-0 clasificacion"> Calificación:
+            <label [ngStyle]="{'color':cal.estrellas >= 1 ? 'orange' : 'gray' }" for="radio1">★</label>
+            <label [ngStyle]="{'color':cal.estrellas >= 2 ? 'orange' : 'gray' }" for="radio2">★</label>
+            <label [ngStyle]="{'color':cal.estrellas >= 3 ? 'orange' : 'gray' }" for="radio3">★</label>
+            <label [ngStyle]="{'color':cal.estrellas >= 4 ? 'orange' : 'gray' }" for="radio4">★</label>
+            <label [ngStyle]="{'color':cal.estrellas == 5 ? 'orange' : 'gray' }" for="radio5">★</label>
+          </p>
+
+          <output>
+            {{cal.comentario}}
+          </output>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="col" *ngIf="!calificaciones && !calificacion">
+    <p>No hay comentarios de este hotel, inicia sesion y comenta</p>
+  </div>
+
+</div>

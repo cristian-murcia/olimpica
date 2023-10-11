@@ -1,0 +1,26 @@
+label {
+    color: orange;
+}
+
+input[type="radio"] {
+    display: none;
+}
+
+.clasificacion {
+    direction: ltr;
+    /* right to left */
+    unicode-bidi: bidi-override;
+    /* bidi de bidireccional */
+}
+
+label:hover {
+    color: orange;
+}
+
+label:hover~label {
+    color: gray;
+}
+
+input[type="radio"]:checked~label {
+    color: gray;
+}

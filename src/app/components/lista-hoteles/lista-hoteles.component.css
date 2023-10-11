@@ -1,0 +1,14 @@
+label {
+  color: orange;
+}
+
+input[type="radio"] {
+  display: none;
+}
+
+.clasificacion {
+  direction: ltr;
+  /* right to left */
+  unicode-bidi: bidi-override;
+  /* bidi de bidireccional */
+}

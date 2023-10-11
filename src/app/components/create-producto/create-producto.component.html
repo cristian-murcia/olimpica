@@ -1,0 +1,82 @@
+<div class="d-block container ">
+
+    <div id="page-content-wrapper">
+
+        <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" [routerLink]="['/inicio']">Inicio <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <div class="container-fluid">
+            <h2 class="my-5 ml-3">Crear producto</h2>
+
+            <form [formGroup]="formProducto" class="container-fluid">
+                <div class="d-block">
+                    <div class="mb-2 col-md-6">
+                        <label class="text-dark" for="hotelName">Nombre producto</label>
+                        <input type="text" name="hotelName" class="form-control" formControlName="hotelName"
+                            placeholder="Ingrese su nombre" />
+                        <ng-container *ngIf="errorCreate">
+                            <span class="text-danger" *ngIf="formProducto.controls.hotelName.errors?.required">
+                                El nombre es requerido
+                            </span>
+                            <span class="text-danger" *ngIf="formProducto.controls.hotelName.errors?.pattern">
+                                Error en los caracteres
+                            </span>
+                        </ng-container>
+                    </div>
+                </div>
+                <div class="mb-2 col-md-6">
+                    <label class="text-dark" for="precio">Precio</label>
+                    <input type="number" name="precio" class="form-control" formControlName="precio"
+                        placeholder="Ingrese su nombre" />
+                    <ng-container *ngIf="errorCreate">
+                        <span class="text-danger" *ngIf="formProducto.controls.precio.errors?.required">
+                            El precio es requerido
+                        </span>
+                        <span class="text-danger" *ngIf="formProducto.controls.precio.errors?.pattern">
+                            Error en los caracteres
+                        </span>
+                    </ng-container>
+                </div>
+                <div class="mb-2 col-md-6">
+                    <label for="dropdown">Selecciona una categia:</label>
+                    <select class="form-control" id="dropdown" formControlName="categoria">
+                        <option value="">Seleccione una opción</option>
+                        <option value="1">Aseo</option>
+                        <option value="2">Hogar</option>
+                        <option value="3">Decoración</option>
+                        <option value="4">Frutas</option>
+                        <option value="5">Granos</option>
+                    </select>
+                </div>
+
+                <div class="mb-2 col-md-6">
+                    <input type="file" (change)="onFileSelected($event, 1)" accept="image/*">
+                  <img *ngIf="selectedImages[1]" [src]="selectedImages[1]" alt="Imagen cargada" height="60" width="100">
+                </div>
+                <div class="mb-2 col-md-6">
+                    <input type="file" (change)="onFileSelected($event, 2)" accept="image/*">
+                  <img *ngIf="selectedImages[2]"  [src]="selectedImages[2]" alt="Imagen cargada" height="60" width="100">
+                </div>
+                <div class="mb-2 col-md-6">
+                    <input type="file" (change)="onFileSelected($event, 3)" accept="image/*">
+                  <img *ngIf="selectedImages[3]" [src]="selectedImages[3]" alt="Imagen cargada" height="60" width="100">
+                </div>
+
+                <div class="float-right">
+                    <a [routerLink]="['/inicio']" class="btn btn-outline-info my-0 my-sm-0 py-0 px-1 mr-3">Ir atras</a>
+                    <a class="btn btn-outline-success my-0 my-sm-0 py-0 px-1" (click)="createProducto()">Crear</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+</div>

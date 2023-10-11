@@ -1,0 +1,160 @@
+<div class="container mt-1">
+  <nav class="navbar navbar-expand-lg navbar-light bg-light py-0">
+    <a class="navbar-brand" href="#">
+      <img
+        src="/assets/img/logo.png"
+        width="65" height="65" alt="">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto mt-1">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/inicio']">Olimpica </a>
+        </li>
+      </ul>
+
+      <button class="btn btn-outline-success my-2 my-sm-0 mr-3" type="button" data-toggle="modal"
+        data-target="#register" data-whatever="@mdo" (click)="createForm()" *ngIf="!usuario">Registrarte</button>
+
+      <button class="btn btn-outline-success my-2 my-sm-0 mr-3" type="button" data-toggle="modal" data-target="#login"
+        data-whatever="@mdo" (click)="login()" *ngIf="!usuario">Inicio de sesión</button>
+
+
+      <button class="btn btn-outline-danger my-2 my-sm-0 mr-3" type="button" *ngIf="usuario"
+        (click)="cerrarSesion()">Cerrar Sesión</button>
+    </div>
+  </nav>
+</div>
+
+<!--CREAR USUARIO-->
+<div class="modal fade" id="register" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Crea una cuenta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formCreateUser">
+          <div class="mb-2">
+            <label class="text-dark" for="name">Nombre</label>
+            <input type="text" name="name" class="form-control" formControlName="userName"
+              placeholder="Ingrese su nombre" />
+            <ng-container *ngIf="errorCreate">
+              <span class="text-danger" *ngIf="formCreateUser.controls.userName.errors?.required">
+                El nombre es requerido
+              </span>
+              <span class="text-danger" *ngIf="formCreateUser.controls.userName.errors?.pattern">
+                Error en los caracteres
+              </span>
+            </ng-container>
+          </div>
+
+          <div class="mb-2">
+            <label class="text-dark" for="apellido">Apellidos</label>
+            <input type="text" name="apellido" class="form-control" formControlName="userSurname"
+              placeholder="Ingrese su apellido" />
+            <ng-container *ngIf="errorCreate">
+              <span class="text-danger" *ngIf="formCreateUser.controls.userSurname.errors?.required">
+                El apellido es requerido
+              </span>
+              <span class="text-danger" *ngIf="formCreateUser.controls.userSurname.errors?.pattern">
+                Error en los caracteres
+              </span>
+            </ng-container>
+          </div>
+
+          <div class="mb-2">
+            <label class="text-dark" for="mail">Correo electronico</label>
+            <input type="text" name="mail" class="form-control" formControlName="userMail"
+              placeholder="Ingrese su correo" />
+            <ng-container *ngIf="errorCreate">
+              <span class="text-danger" *ngIf="formCreateUser.controls.userMail.errors?.required">
+                El correo es requerido
+              </span>
+              <span class="text-danger" *ngIf="formCreateUser.controls.userMail.errors?.pattern">
+                Correo invalido
+              </span>
+            </ng-container>
+          </div>
+
+          <div class="mb-2">
+            <label class="text-dark" for="clave">Contraeña</label>
+            <input type="password" name="clave" class="form-control" formControlName="userPassword"
+              placeholder="Ingrese su contraseña" />
+            <ng-container *ngIf="errorCreate">
+              <span class="text-danger" *ngIf="formCreateUser.controls.userPassword.errors?.required">
+                La contraseña es requerida
+              </span>
+              <span class="text-danger" *ngIf="formCreateUser.controls.userPassword.errors?.pattern">
+                Error en los caracteres
+              </span>
+            </ng-container>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="createUser()">Registrarme</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--LOGIN DE USUARIO-->
+<div class="modal fade" id="login" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-center" id="exampleModalLabel">Crea una cuenta</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="formLogin">
+
+          <div class="mb-2">
+            <label class="text-dark" for="mail">Correo electronico</label>
+            <input type="text" name="mail" class="form-control" formControlName="userMail"
+              placeholder="Ingrese su correo" />
+            <ng-container *ngIf="errorLogin">
+              <span class="text-danger" *ngIf="formLogin.controls.userMail.errors?.required">
+                El correo es requerido
+              </span>
+              <span class="text-danger" *ngIf="formLogin.controls.userMail.errors?.pattern">
+                Correo invalido
+              </span>
+            </ng-container>
+          </div>
+
+          <div class="mb-2">
+            <label class="text-dark" for="clave">Contraeña</label>
+            <input type="password" name="clave" class="form-control" formControlName="userPassword"
+              placeholder="Ingrese su contraseña" />
+            <ng-container *ngIf="errorLogin">
+              <span class="text-danger" *ngIf="formLogin.controls.userPassword.errors?.required">
+                La contraseña es requerida
+              </span>
+              <span class="text-danger" *ngIf="formLogin.controls.userPassword.errors?.pattern">
+                Error en los caracteres
+              </span>
+            </ng-container>
+          </div>
+
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+        <button type="button" class="btn btn-primary" (click)="login()">Iniciar sesión</button>
+      </div>
+    </div>
+  </div>
+</div>
